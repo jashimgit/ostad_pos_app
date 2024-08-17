@@ -106,18 +106,41 @@ class UserController extends Controller
 
             // passwrod reset token  issue
             $token = JwtTokenHelper::ResetPasswordToken($email);
-            
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'otp verification successfull',
                 'token' => $token,
             ], 200);
-
         } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'otp not matched'
             ], 200);
+        }
+    }
+
+    // reset password
+
+    public function resetPassword(Request $request)
+    {
+        try {
+            $password = $request->password;
+            $email = $request->header('email');
+
+            User::where('email', $email)->update([
+                'password' => Hash::make($password),
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Password reset succssfully, please Login',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'success',
+                'message' => $th->getMessage(),
+            ], 401);
         }
     }
 }
