@@ -9,7 +9,7 @@ class JwtTokenHelper
 {
 
 
-    public static function CreateToken($userEmail)
+    public static function CreateToken($userEmail, $userId)
     {
         $key = env('JWT_KEY');
 
@@ -17,7 +17,8 @@ class JwtTokenHelper
             'iss' => 'laravel-pos-token',
             'iat' => time(),
             'exp' => time() + 60 * 60,
-            'userEmail' => $userEmail
+            'userEmail' => $userEmail,
+            'userid' => $userId,
         ];
 
 
@@ -29,12 +30,16 @@ class JwtTokenHelper
 
     public static function VerifyToken($token)
     {
-        // decode 
-        try {
-            $key = env('JWT_KEY');
-            $decode = JWT::decode($token, new Key($key, 'HS256'));
-            return $decode->userEmail;
 
+        try {
+            if ($token == null) {
+                return 'unauthorized';
+            } else {
+
+                $key = env('JWT_KEY');
+                $decode = JWT::decode($token, new Key($key, 'HS256'));
+                return $decode;
+            }
         } catch (\Throwable $th) {
             return 'unauthorized';
         }
@@ -49,10 +54,11 @@ class JwtTokenHelper
             'iss' => 'laravel-pos-token',
             'iat' => time(),
             'exp' => time() + 60 * 10,
-            'userEmail' => $userEmail
+            'userEmail' => $userEmail,
+            'userid' => '0',
         ];
 
 
-        return $token = JWT::encode($payload, $key, 'HS256');
+        return  JWT::encode($payload, $key, 'HS256');
     }
 }

@@ -21,8 +21,28 @@ Route::get('/', function () {
 
 
 
+
+// 
+
+
+Route::get('/login', [UserController::class, 'login']);
+Route::get('/logout', [UserController::class, 'logout']);
+
+Route::get('/register', [UserController::class, 'register']);
+Route::get('/send-otp', [UserController::class, 'showSendOtpForm']);
+Route::get('/verify-otp', [UserController::class, 'showVerifyOtpForm']);
+Route::get('/reset-password', [UserController::class, 'showResetPasswordForm']);
+Route::get('/profile', [UserController::class, 'showUserProfilePage'])->middleware([VerifyUserToken::class]);
+Route::get('/user-profile', [UserController::class, 'showUserProfile'])->middleware([VerifyUserToken::class]);
+
+
+Route::get('/dashboard', [UserController::class, 'showDashboard'])->middleware([VerifyUserToken::class]);
+
+
+
 Route::post('/user-registration', [UserController::class, 'userRegistration']);
 Route::post('/user-login', [UserController::class, 'userLogin']);
 Route::post('/sent-otp', [UserController::class, 'sendOtp']);
 Route::post('/verify-otp', [UserController::class, 'verifyOtp']);
 Route::post('/reset-password', [UserController::class, 'resetPassword'])->middleware([VerifyUserToken::class]);
+Route::post('/user-update', [UserController::class, 'userProfileUpdate'])->middleware([VerifyUserToken::class]);

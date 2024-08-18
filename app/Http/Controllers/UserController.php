@@ -14,6 +14,91 @@ class UserController extends Controller
 {
 
 
+
+    public function login()
+    {
+        return view('pages.auth.login-page');
+    }
+
+
+    public  function register()
+    {
+        return view('pages.auth.registration-page');
+    }
+
+
+    public function showSendOtpForm()
+    {
+        return view('pages.auth.send-otp-page');
+    }
+
+
+    public function showVerifyOtpForm()
+    {
+        return view('pages.auth.verify-otp-page');
+    }
+
+
+
+    public function showResetPasswordForm()
+    {
+        return view('pages.auth.reset-pass-page');
+    }
+
+
+
+
+
+
+
+    public function showDashboard()
+    {
+        return view('pages.dashboard.dashboard-page');
+    }
+
+    public function showUserProfilePage()
+    {
+        return view('pages.dashboard.profile-page');
+    }
+
+
+
+    public function showUserProfile(Request $request)
+    {
+        $email = $request->header('email');
+
+        $user = User::where('email', $email)->first();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Request Successfull',
+            'data' => $user,
+        ], 200);
+    }
+
+
+
+    // update user profile
+
+
+    public function userProfileUpdate(Request $request)
+    {
+        $data = [
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'mobile' => $request->mobile,
+            'password' => Hash::make($request->password),
+        ];
+
+        User::where('email', $request->header('email'))->update($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'profile update successful',
+        ], 200);
+    }
+
+
     public function userRegistration(Request $request)
     {
 
@@ -42,19 +127,29 @@ class UserController extends Controller
 
     public function userLogin(Request $request)
     {
-        $user = User::where('email', '=', $request->input('email'))->first();
+        try {
+            $user = User::where('email', $request->input('email'))->first();
 
-        if (Hash::check($request->password, $user['password'])) {
-            $token = JwtTokenHelper::CreateToken($request->input('email'));
+            if (Hash::check($request->password, $user->password)) {
+
+                $token = JwtTokenHelper::CreateToken($request->email, $user->id);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'User Login Successful',
+                ], 200)->cookie('token', $token, time() + 60 * 24 * 30);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'unauthorized'
+                ], 401);
+            }
+        } catch (\Throwable $e) {
+
             return response()->json([
-                'status' => 'success',
-                'message' => 'User Login Successful',
-            ], 200)->cookie('token', $token, time() + 60 * 24 * 30);
-        } else {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'unauthorized'
-            ], 200);
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -95,28 +190,31 @@ class UserController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        $otp = $request->otp;
-        $email = $request->email;
+        try {
+            $otp = $request->otp;
 
-        // validate
-        $count = User::where('email', $email)->where('otp', $otp)->count();
-        if ($count == 1) {
-            // update otp
-            User::where('email', $email)->update(['otp' => 0]);
+            $email = $request->email;
 
-            // passwrod reset token  issue
-            $token = JwtTokenHelper::ResetPasswordToken($email);
+            // validate
+            $count = User::where('email', $email)->where('otp', $otp)->count();
+            if ($count == 1) {
+                // update otp
+                User::where('email', $email)->update(['otp' => 0]);
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'otp verification successfull',
-                'token' => $token,
-            ], 200);
-        } else {
+                // passwrod reset token  issue
+                $token = JwtTokenHelper::ResetPasswordToken($email);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'otp verification successfull',
+                    'token' => $token,
+                ], 200)->cookie('token', $token, 60 * 24 * 30);
+            }
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'otp not matched'
-            ], 200);
+                'message' => $th->getMessage(),
+            ], 501);
         }
     }
 
@@ -127,6 +225,9 @@ class UserController extends Controller
         try {
             $password = $request->password;
             $email = $request->header('email');
+
+
+            // dd($email);
 
             User::where('email', $email)->update([
                 'password' => Hash::make($password),
@@ -142,5 +243,16 @@ class UserController extends Controller
                 'message' => $th->getMessage(),
             ], 401);
         }
+    }
+
+
+
+
+
+    // logout
+
+    public function logout()
+    {
+        return redirect('/login')->cookie('token', '', -1);
     }
 }

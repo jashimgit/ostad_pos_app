@@ -16,19 +16,19 @@ class VerifyUserToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $userToken = $request->header('token');
+        $userToken = $request->cookie('token');
+
         $result = JwtTokenHelper::VerifyToken($userToken);
 
         if ($result == 'unauthorized') {
             
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'unauthorized',
-            ], 401);
+            return redirect('/user-login');
 
         } else {
             
-            $request->headers->set('email', $result);
+            $request->headers->set('email', $result->userEmail);
+            $request->headers->set('id', $result->userid);
+            
 
             return $next($request);
         }
