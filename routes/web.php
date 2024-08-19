@@ -59,6 +59,7 @@ Route::get('/list-product', [ProductController::class, 'showAllProducts'])->midd
 Route::post('/create-product', [ProductController::class, 'storeProduct'])->middleware([VerifyUserToken::class]);
 Route::post('/product-by-id', [ProductController::class, 'editProduct'])->middleware([VerifyUserToken::class]);
 Route::post('/update-product', [ProductController::class, 'updateProduct'])->middleware([VerifyUserToken::class]);
+Route::post('/delete-product', [ProductController::class, 'deleteProduct'])->middleware([VerifyUserToken::class]);
 
 
 

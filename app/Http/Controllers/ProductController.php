@@ -120,4 +120,17 @@ class ProductController extends Controller
             ]);
         }
     }
+
+
+    // delete
+
+    public function deleteProduct(Request $request) 
+    {
+        $user_id = $request->header('id');
+        $productId = $request->id;
+        $filePath = $request->file_path;
+        File::delete($filePath);
+        return Product::where('id', $productId)->where('user_id', $user_id)->delete();
+
+    }
 }
