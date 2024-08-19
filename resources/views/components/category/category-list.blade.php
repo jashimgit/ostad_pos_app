@@ -72,6 +72,8 @@ async function getList() {
 
     $('.deleteBtn').on('click',function () {
         let id= $(this).data('id');
+        
+        
         $("#delete-modal").modal('show');
         $("#deleteID").val(id);
     })

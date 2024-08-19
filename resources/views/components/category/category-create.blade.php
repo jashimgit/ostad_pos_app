@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-12 p-1">
                                 <label class="form-label">Category Name *</label>
-                                <input type="text" class="form-control" id="categoryName" name="name">
+                                <input type="text" class="form-control" id="categoryName">
                             </div>
                         </div>
                     </div>
@@ -30,18 +30,17 @@
         let categoryName = document.getElementById('categoryName').value;
         if (categoryName.length === 0) {
             errorToast("Category Required !")
-        }
-        else {
+        } else {
             document.getElementById('modal-close').click();
             showLoader();
             let res = await axios.post("/create-category",{name:categoryName})
+
             hideLoader();
             if(res.status===201){
                 successToast('Request completed');
                 document.getElementById("save-form").reset();
                 await getList();
-            }
-            else{
+            } else {
                 errorToast("Request fail !")
             }
         }

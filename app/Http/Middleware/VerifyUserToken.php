@@ -22,7 +22,7 @@ class VerifyUserToken
 
         if ($result == 'unauthorized') {
             
-            return redirect('/user-login');
+            return redirect('/login');
 
         } else {
             

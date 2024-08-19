@@ -24,11 +24,13 @@ Route::get('/', function () {
 
 // ______ Phase 2_______
 
-Route::get('/category', [CategoryController::class, 'index']);
-Route::get('/list-category', [CategoryController::class, 'showAllCategory']);
-Route::get('/category/create', [CategoryController::class, 'create']);
-Route::post('/category', [CategoryController::class, 'store']);
-Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
+Route::get('/category', [CategoryController::class, 'index'])->middleware([VerifyUserToken::class]);
+Route::get('/list-category', [CategoryController::class, 'showAllCategory'])->middleware([VerifyUserToken::class]);
+
+Route::post('/create-category', [CategoryController::class, 'storeCategoryAction'])->middleware([VerifyUserToken::class]);
+Route::post('/delete-category', [CategoryController::class, 'deleteCategoryAction'])->middleware([VerifyUserToken::class]);
+
+
 
 
 
