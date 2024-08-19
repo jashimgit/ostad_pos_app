@@ -43,8 +43,9 @@ Route::get('/customerPage', [CustomerController::class, 'index'])->middleware([V
 Route::get('/list-customer', [CustomerController::class, 'showAllCustomers'])->middleware([VerifyUserToken::class]);
 Route::post('/customer-by-id', [CustomerController::class, 'editCustomerAction'])->middleware([VerifyUserToken::class]);
 Route::post('/update-customer', [CustomerController::class, 'updateCustomerAction'])->middleware([VerifyUserToken::class]);
+Route::post('/delete-customer', [CustomerController::class, 'deleteCustomerAction'])->middleware([VerifyUserToken::class]);
 
-
+Route::post('/create-customer', [CustomerController::class, 'storeCustomerAction'])->middleware([VerifyUserToken::class]);
 
 
 
