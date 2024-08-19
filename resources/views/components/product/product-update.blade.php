@@ -56,7 +56,7 @@
 
     async function UpdateFillCategoryDropDown(){
         let res = await axios.get("/list-category")
-        res.data.forEach(function (item,i) {
+        res.data.categories.forEach(function (item,i) {
             let option=`<option value="${item['id']}">${item['name']}</option>`
             $("#productCategoryUpdate").append(option);
         })
@@ -70,11 +70,11 @@
         document.getElementById('oldImg').src=filePath;
 
 
-        showLoader();
+        // showLoader();
         await UpdateFillCategoryDropDown();
 
         let res=await axios.post("/product-by-id",{id:id})
-        hideLoader();
+        // hideLoader();
 
         document.getElementById('productNameUpdate').value=res.data['name'];
         document.getElementById('productPriceUpdate').value=res.data['price'];

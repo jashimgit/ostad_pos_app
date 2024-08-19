@@ -57,6 +57,9 @@ Route::post('/create-customer', [CustomerController::class, 'storeCustomerAction
 Route::get('/productPage', [ProductController::class, 'index'])->middleware([VerifyUserToken::class]);
 Route::get('/list-product', [ProductController::class, 'showAllProducts'])->middleware([VerifyUserToken::class]);
 Route::post('/create-product', [ProductController::class, 'storeProduct'])->middleware([VerifyUserToken::class]);
+Route::post('/product-by-id', [ProductController::class, 'editProduct'])->middleware([VerifyUserToken::class]);
+Route::post('/update-product', [ProductController::class, 'updateProduct'])->middleware([VerifyUserToken::class]);
+
 
 
 
