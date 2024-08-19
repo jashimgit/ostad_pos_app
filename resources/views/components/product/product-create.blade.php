@@ -53,7 +53,7 @@
 
     async function FillCategoryDropDown(){
         let res = await axios.get("/list-category")
-        res.data.forEach(function (item,i) {
+        res.data.categories.forEach(function (item,i) {
             let option=`<option value="${item['id']}">${item['name']}</option>`
             $("#productCategory").append(option);
         })
@@ -62,7 +62,7 @@
 
     async function Save() {
 
-        let productCategory=document.getElementById('productCategory').value;
+        let productCategory = document.getElementById('productCategory').value;
         let productName = document.getElementById('productName').value;
         let productPrice = document.getElementById('productPrice').value;
         let productUnit = document.getElementById('productUnit').value;
@@ -71,41 +71,42 @@
         if (productCategory.length === 0) {
             errorToast("Product Category Required !")
         }
-        else if(productName.length===0){
+        else if(productName.length === 0){
             errorToast("Product Name Required !")
         }
-        else if(productPrice.length===0){
+        else if(productPrice.length ===  0){
             errorToast("Product Price Required !")
         }
-        else if(productUnit.length===0){
+        else if(productUnit.length === 0){
             errorToast("Product Unit Required !")
         }
         else if(!productImg){
             errorToast("Product Image Required !")
-        }
-
-        else {
+        } else {
 
             document.getElementById('modal-close').click();
 
-            let formData=new FormData();
-            formData.append('img',productImg)
-            formData.append('name',productName)
-            formData.append('price',productPrice)
-            formData.append('unit',productUnit)
-            formData.append('category_id',productCategory)
+            let formData = new FormData();
+            formData.append('img', productImg)
+            formData.append('name', productName)
+            formData.append('price', productPrice)
+            formData.append('unit', productUnit)
+            formData.append('category_id', productCategory)
 
             const config = {
-                headers: {
+                headers: {  
                     'content-type': 'multipart/form-data'
                 }
             }
 
             showLoader();
-            let res = await axios.post("/create-product",formData,config)
+            let res = await axios.post("/create-product", formData, config)
+            
+            // console.log(res);
+            
             hideLoader();
 
-            if(res.status===201){
+            if(res.status === 201){
                 successToast('Request completed');
                 document.getElementById("save-form").reset();
                 await getList();

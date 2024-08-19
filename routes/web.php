@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\VerifyUserToken;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ Route::get('/', function () {
 
 
 
-// ______ Phase 2_______
+// ______ Phase 2 category _______
 
 Route::get('/category', [CategoryController::class, 'index'])->middleware([VerifyUserToken::class]);
 Route::get('/list-category', [CategoryController::class, 'showAllCategory'])->middleware([VerifyUserToken::class]);
@@ -37,7 +38,7 @@ Route::post('/update-category', [CategoryController::class, 'updateCategoryActio
 
 
 
-// ______ Phase 3 _______
+// ______ Phase 3 customers _______
 
 Route::get('/customerPage', [CustomerController::class, 'index'])->middleware([VerifyUserToken::class]);
 Route::get('/list-customer', [CustomerController::class, 'showAllCustomers'])->middleware([VerifyUserToken::class]);
@@ -47,6 +48,15 @@ Route::post('/delete-customer', [CustomerController::class, 'deleteCustomerActio
 
 Route::post('/create-customer', [CustomerController::class, 'storeCustomerAction'])->middleware([VerifyUserToken::class]);
 
+
+
+
+// ______ Phase 4 products _______
+
+
+Route::get('/productPage', [ProductController::class, 'index'])->middleware([VerifyUserToken::class]);
+Route::get('/list-product', [ProductController::class, 'showAllProducts'])->middleware([VerifyUserToken::class]);
+Route::post('/create-product', [ProductController::class, 'storeProduct'])->middleware([VerifyUserToken::class]);
 
 
 
