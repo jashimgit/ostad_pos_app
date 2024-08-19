@@ -40,7 +40,7 @@ async function getList() {
 
     showLoader();
     let res = await axios.get("/list-category");
-    // console.log(res);
+    
     
     hideLoader();
 
@@ -72,8 +72,6 @@ async function getList() {
 
     $('.deleteBtn').on('click',function () {
         let id= $(this).data('id');
-        
-        
         $("#delete-modal").modal('show');
         $("#deleteID").val(id);
     })

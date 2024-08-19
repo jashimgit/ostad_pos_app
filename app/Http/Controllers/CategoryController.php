@@ -66,14 +66,56 @@ class CategoryController extends Controller
                 'status' => 'success',
                 'message' => 'category delete successfull'
             ], 200);
-
         } catch (\Throwable $e) {
 
             return response()->json([
                 'status' => 'success',
                 'message' => $e->getMessage(),
             ], 500);
-            
         }
+    }
+
+    // edit
+
+    function editCategoryAction(Request $request)
+    {
+
+        try {
+
+            $category = Category::where('id', $request->id)->first();
+
+            return $category;
+
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'data' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // update
+
+    public function updateCategoryAction(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $data = [
+                'name' => $request->name,
+            ];
+    
+            Category::where('id', $request->id)->update($data);
+            
+            return response()->json([
+                'status' => 'success',
+                'data' => 1,
+
+            ],200);
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 }

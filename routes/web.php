@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\VerifyUserToken;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,19 @@ Route::get('/list-category', [CategoryController::class, 'showAllCategory'])->mi
 
 Route::post('/create-category', [CategoryController::class, 'storeCategoryAction'])->middleware([VerifyUserToken::class]);
 Route::post('/delete-category', [CategoryController::class, 'deleteCategoryAction'])->middleware([VerifyUserToken::class]);
+Route::post('/category-by-id', [CategoryController::class, 'editCategoryAction'])->middleware([VerifyUserToken::class]);
+Route::post('/update-category', [CategoryController::class, 'updateCategoryAction'])->middleware([VerifyUserToken::class]);
+
+
+
+
+
+// ______ Phase 3 _______
+
+Route::get('/customerPage', [CustomerController::class, 'index'])->middleware([VerifyUserToken::class]);
+Route::get('/list-customer', [CustomerController::class, 'showAllCustomers'])->middleware([VerifyUserToken::class]);
+
+
 
 
 
