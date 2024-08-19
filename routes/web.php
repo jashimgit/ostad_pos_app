@@ -41,7 +41,8 @@ Route::post('/update-category', [CategoryController::class, 'updateCategoryActio
 
 Route::get('/customerPage', [CustomerController::class, 'index'])->middleware([VerifyUserToken::class]);
 Route::get('/list-customer', [CustomerController::class, 'showAllCustomers'])->middleware([VerifyUserToken::class]);
-
+Route::post('/customer-by-id', [CustomerController::class, 'editCustomerAction'])->middleware([VerifyUserToken::class]);
+Route::post('/update-customer', [CustomerController::class, 'updateCustomerAction'])->middleware([VerifyUserToken::class]);
 
 
 

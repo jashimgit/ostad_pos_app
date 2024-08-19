@@ -25,4 +25,35 @@ class CustomerController extends Controller
             'customers' => $customers,
         ],200);
     }
+
+
+    public function editCustomerAction(Request $request)
+    {
+        return Customer::where('id', $request->id)->first();
+    }
+
+
+    public function updateCustomerAction(Request $request)
+    {
+        try {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobile'=>$request->mobile,
+            ];
+    
+    
+            Customer::where('id', $request->id)->update($data);
+
+            return true;
+
+        } catch (\Throwable $e) {
+            
+            return response()->json([
+                'status'=> 'fail',
+                'message' => $e->getMessage()
+            ],500);
+        }
+    }
+
 }
