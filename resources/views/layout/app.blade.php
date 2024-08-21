@@ -13,7 +13,10 @@
     <link href="{{asset('css/dataTables.dataTables.min.css')}}" rel="stylesheet" />
     <script src="{{asset('js/toastify-js.js')}}"></script>
     <script src="{{asset('js/axios.min.js')}}"></script>
+    <script src="{{asset('js/moment.min.js')}}"></script>
+
     <script src="{{asset('js/config.js')}}"></script>
+    
 </head>
 
 <body>
@@ -30,9 +33,11 @@
 <script>
 
 </script>
+
 <script src="{{ asset('js/jquery-3.7.1.min.js')}}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.bundle.js')}}"></script>
+
 
 </body>
 </html>

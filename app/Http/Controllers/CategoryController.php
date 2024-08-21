@@ -42,6 +42,7 @@ class CategoryController extends Controller
                 'status' => 'success',
                 'message' => 'Category created successfully',
             ], 201);
+            
         } catch (\Throwable $e) {
 
             return response()->json([

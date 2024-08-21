@@ -15,9 +15,9 @@ class ProductController extends Controller
         return view('pages.dashboard.product-page');
     }
 
-    public function showAllProducts()
+    public function showAllProducts(Request $request)
     {
-        return Product::all();
+        return Product::where('user_id', $request->header('id'))->get();
     }
 
     public function storeProduct(Request $request)
@@ -54,6 +54,7 @@ class ProductController extends Controller
                 'status' => 'success',
                 'message' => 'Product added succssfully',
             ], 201);
+            
         } catch (\Exception $e) {
 
             return response()->json([

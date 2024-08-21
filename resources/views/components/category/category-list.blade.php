@@ -18,11 +18,12 @@
                             <tr class="bg-light">
                                 <th>No</th>
                                 <th>Category</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="tableList">
-
                         </tbody>
                     </table>
                 </div>
@@ -31,36 +32,53 @@
     </div>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
 <script>
     getList();
 
 
 async function getList() {
 
-
     showLoader();
     let res = await axios.get("/list-category");
     
     
+    
     hideLoader();
 
-    let tableList=$("#tableList");
-    let tableData=$("#tableData");
+    let tableList = $("#tableList");
+    let tableData = $("#tableData");
 
     tableData.DataTable().destroy();
     tableList.empty();
 
-    res.data.categories.forEach(function (item,index) {
-        let row=`<tr>
+    res.data.categories.forEach(function (item, index) {
+        
+        
+        const created_at = moment(item['created_at']);
+        const updated_at = moment(item['updated_at']);
+        
+        
+    
+        let row = `<tr>
                     <td>${index+1}</td>
                     <td>${item['name']}</td>
+                    <td>${ created_at.format('D MMMM, YYYY')  }</td>
+                    <td>${ updated_at.format('D MMMM, YYYY')  }</td>
+                    
+                    
                     <td>
                         <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
                         <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
                     </td>
                 </tr>`
+
         tableList.append(row)
     })
+
+
 
     $('.editBtn').on('click', async function () {
         let id= $(this).data('id');

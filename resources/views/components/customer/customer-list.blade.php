@@ -38,7 +38,6 @@
 async function getList() {
     showLoader();
     let res=await axios.get("/list-customer");
-    // console.log(res.data);
     
     hideLoader();
 

@@ -22,12 +22,12 @@
 <script>
 
     function SalesReport() {
-        let FormDate = document.getElementById('FormDate').value;
-        let ToDate = document.getElementById('ToDate').value;
+        let fromDate = document.getElementById('FormDate').value;
+        let toDate  = document.getElementById('ToDate').value;
         if(FormDate.length === 0 || ToDate.length === 0){
             errorToast("Date Range Required !")
         }else{
-            window.open('/sales-report/'+FormDate+'/'+ToDate);
+            window.open('/sales-report/'+fromDate+'/'+toDate);
         }
     }
 

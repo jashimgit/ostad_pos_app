@@ -17,49 +17,49 @@ class CategorySeeder extends Seeder
         
         DB::table('categories')->insert([
             'name' => 'Electronics',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Books',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Health',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Fashion',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Food and Beverage',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Auto and Parts',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Furniture and Decor',
-            'user_id' => 12,
+            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

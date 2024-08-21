@@ -7,10 +7,13 @@
 
 Task completed: Phase 1
 
-1. Register an user
-2. Login user
-3. Reset password using OTP verification
-4. Using JWT token user verified
+1. user registration ( end point)
+2. User login & JWT token (end point)
+3. Sending OTP code to user's email - for password reset stage 1 ( end point)
+4. Verify OTP code - password reset stage 2 ( end point )
+5. allow user to reset passwor - password reset stage 3 ( end point )
+6. allow user to get profile details - (end point)
+7. allow user to update profile details (end point)
 
 
 

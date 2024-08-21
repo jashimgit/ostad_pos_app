@@ -48,10 +48,6 @@ class UserController extends Controller
 
 
 
-    public function showDashboard()
-    {
-        return view('pages.dashboard.dashboard-page');
-    }
 
     public function showUserProfilePage()
     {
@@ -121,6 +117,12 @@ class UserController extends Controller
     }
 
 
+    /**
+     *  process user login
+     *  method : post
+     *  return response
+     * 
+     */
 
     public function userLogin(Request $request)
     {
@@ -135,12 +137,15 @@ class UserController extends Controller
                     'status' => 'success',
                     'message' => 'User Login Successful',
                 ], 200)->cookie('token', $token, time() + 60 * 24 * 30);
+
             } else {
+
                 return response()->json([
                     'status' => 'failed',
                     'message' => 'unauthorized'
                 ], 401);
             }
+            
         } catch (\Throwable $e) {
 
             return response()->json([
@@ -154,35 +159,38 @@ class UserController extends Controller
 
     public function sendOtp(Request $request)
     {
-        $email = $request->email;
-        $otp = rand(1000, 9999);
+        try {
 
+            $email = $request->email;
+            $otp = rand(1000, 9999);
 
+            $count = User::where('email', $email)->count();
 
-        $count = User::where('email', $email)->count();
+            if ($count == 1) {
 
-        if ($count == 1) {
+                // send  otp to users email
+                Mail::to($email)->send(new OTPMailer($otp));
 
-            // send  otp to users email
-            Mail::to($email)->send(new OTPMailer($otp));
+                // update otop to user table
 
-            // update otop to user table
+                User::where('email', $email)->update([
+                    'otp' => $otp
+                ]);
 
-            User::where('email', $email)->update([
-                'otp' => $otp
-            ]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'otp send'
+                ], 200);
+            }
+        } catch (\Throwable $th) {
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'otp send'
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'someting wrong'
-            ], 200);
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
+
 
 
     public function verifyOtp(Request $request)
@@ -205,9 +213,11 @@ class UserController extends Controller
                     'status' => 'success',
                     'message' => 'otp verification successfull',
                     'token' => $token,
+
                 ], 200)->cookie('token', $token, 60 * 24 * 30);
             }
         } catch (\Throwable $th) {
+
             return response()->json([
                 'status' => 'error',
                 'message' => $th->getMessage(),
@@ -235,6 +245,8 @@ class UserController extends Controller
                 'message' => 'Password reset succssfully, please Login',
             ], 200);
         } catch (\Throwable $th) {
+
+
             return response()->json([
                 'status' => 'success',
                 'message' => $th->getMessage(),

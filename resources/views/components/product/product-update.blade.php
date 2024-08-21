@@ -70,11 +70,11 @@
         document.getElementById('oldImg').src=filePath;
 
 
-        // showLoader();
+        showLoader();
         await UpdateFillCategoryDropDown();
 
         let res=await axios.post("/product-by-id",{id:id})
-        // hideLoader();
+        hideLoader();
 
         document.getElementById('productNameUpdate').value=res.data['name'];
         document.getElementById('productPriceUpdate').value=res.data['price'];

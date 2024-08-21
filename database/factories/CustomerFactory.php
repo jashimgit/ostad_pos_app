@@ -20,7 +20,7 @@ class CustomerFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'mobile' => fake()->phoneNumber(),
-            'user_id' => 12,
+            'user_id' => 1,
         ];
     }
 }
