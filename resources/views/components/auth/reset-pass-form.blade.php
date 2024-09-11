@@ -41,7 +41,7 @@
                     successToast(res.data['message']);
                     setTimeout(function () {
                         window.location.href="/login";
-                    },1000);
+                    }, 1000);
                 }
                 else{
                     errorToast(res.data['message'])

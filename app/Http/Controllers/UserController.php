@@ -244,6 +244,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => 'Password reset succssfully, please Login',
             ], 200);
+            
         } catch (\Throwable $th) {
 
 

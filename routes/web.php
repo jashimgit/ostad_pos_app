@@ -83,7 +83,7 @@ Route::post('/invoice-details', [InvoiceController::class, 'invoiceDetails'])->m
 //  phase 1 routes
 
 
-Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::get('/login', [UserController::class, 'login'])->name('login.form');
 Route::post('/user-login', [UserController::class, 'userLogin'])->name('login');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');

@@ -5,6 +5,7 @@ function hideLoader() {
     document.getElementById('loader').classList.add('d-none')
 }
 
+
 function successToast(msg) {
     Toastify({
         gravity: "top", // `top` or `bottom`
